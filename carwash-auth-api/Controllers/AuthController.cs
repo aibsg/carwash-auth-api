@@ -140,4 +140,12 @@ public class AuthController : ControllerBase
             ExpiresAt = DateTime.UtcNow.AddMinutes(15)
         });
     }
+    [HttpPost("validate")]
+    public ActionResult<TokenValidationResponse> ValidateToken([FromBody] string token)
+    {
+        return Ok(new TokenValidationResponse()
+        {
+            IsValid = true,
+        });
+    }
 }
