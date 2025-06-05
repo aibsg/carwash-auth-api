@@ -22,7 +22,7 @@ jobs:
       - name: Deploy via SSH
         run: |
           ssh ${{ secrets.LOGIN }}@${{ secrets.HOST }} << 'EOF'
-            cd /opt/carwash-booking
+            cd /opt/carwash-auth-api
             git pull
             docker-compose down
             docker-compose up -d --build
