@@ -17,12 +17,12 @@ builder.Services.AddSwaggerGen();
 // База данных (EF Core)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")/*,
+        builder.Configuration.GetConnectionString("DefaultConnection"),
         npgsqlOptions => 
         {
             npgsqlOptions.CommandTimeout(60); // 60 секунд вместо 30 по умолчанию
             npgsqlOptions.EnableRetryOnFailure(3); // Повторные попытки
-        }*/
+        }
     )
 );
 

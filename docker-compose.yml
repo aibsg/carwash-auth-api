@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  api:
+    build: ./carwash-auth-api
+    ports:
+      - "1200:8080"  
+    command: >
+      sh -c "dotnet ef database update --verbose && 
+      dotnet carwash-auth-api.dll"
