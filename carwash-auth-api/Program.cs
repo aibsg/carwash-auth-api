@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Конфигурация JWT
 builder.Services.AddControllers();
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
-builder.Services.AddSingleton<JwtService>();
+builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,13 +18,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        npgsqlOptions => 
-        {
-            npgsqlOptions.CommandTimeout(60); // 60 секунд вместо 30 по умолчанию
-            npgsqlOptions.EnableRetryOnFailure(3); // Повторные попытки
-        }
-    )
-);
+        npgsqlOptions => {
+            npgsqlOptions.CommandTimeout(10);
+            npgsqlOptions.EnableRetryOnFailure();
+        }));
 
 var app = builder.Build();
 

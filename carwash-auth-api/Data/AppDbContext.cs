@@ -13,4 +13,20 @@ public class AppDbContext : DbContext
     {
         
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Уточняем связь: User -> Subject (один к одному)
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.SubjectInfo)
+            .WithMany() // или .WithOne() если Subject не используется в других отношениях
+            .HasForeignKey(u => u.SubjectId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Названия таблиц и схем (если нужно)
+        modelBuilder.Entity<User>().ToTable("User");
+        modelBuilder.Entity<Subject>().ToTable("subject");
+
+        base.OnModelCreating(modelBuilder);
+    }
 }
