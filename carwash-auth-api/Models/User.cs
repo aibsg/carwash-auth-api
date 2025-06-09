@@ -4,12 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace carwash_auth_api.Models;
 
 [Table("User")]
-public class User
+public class User : BaseEntity
 {
-    [Key]
     [Column("userid")]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public override Guid Id { get; set; }
     
     [ForeignKey("SubjectInfo")]
     [Column("subjectid")]

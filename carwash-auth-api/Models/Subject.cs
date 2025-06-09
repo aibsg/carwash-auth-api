@@ -1,15 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace carwash_auth_api.Models;
 
 [Table("subject")]
-public class Subject
+public class Subject : BaseEntity
 {
-   [Key]
-   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
    [Column("subjectid")]
-   public Guid Id { get; set; }
+   public override Guid Id { get; set; }
    
    [Required]
    [Column("firstname")]
