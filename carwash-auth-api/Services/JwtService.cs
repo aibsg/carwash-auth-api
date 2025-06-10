@@ -3,23 +3,16 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
-using carwash_auth_api.Data;
 using carwash_auth_api.Models;
+using carwash_auth_api.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
 namespace carwash_auth_api.Services;
 
-public class JwtService
+public class JwtService(IOptions<JwtSettings> jwtSettings) : IJwtService
 {
-    private readonly JwtSettings _jwtSettings;
-    private readonly AppDbContext _db;
+    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
-    public JwtService(IOptions<JwtSettings> jwtSettings)
-    {
-        _jwtSettings = jwtSettings.Value;
-    }
-
-    // Генерация Access Token (JWT)
     public string GenerateAccessToken(User user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
@@ -37,12 +30,8 @@ public class JwtService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
-    // Генерация случайного Refresh Token
-    public string GenerateRefreshToken()
-    {
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
-    }
+    
+    public string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
     
     public ClaimsPrincipal? ValidateToken(string token)
     {

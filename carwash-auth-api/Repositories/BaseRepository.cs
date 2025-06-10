@@ -32,7 +32,7 @@ public abstract class  BaseRepository<TEntity> : IAsyncRepository<TEntity> where
 
     public async Task Update(TEntity entity)
     {
-        _dbContext.Entry(entity).State = EntityState.Modified;
+        _dbContext.Update(entity);
         await _dbContext.SaveChangesAsync();
     }
 
