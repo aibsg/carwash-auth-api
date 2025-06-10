@@ -23,9 +23,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
             npgsqlOptions.EnableRetryOnFailure();
         }));
 
+
 var app = builder.Build();
 
-
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseSwagger();
 app.UseSwaggerUI();
 
